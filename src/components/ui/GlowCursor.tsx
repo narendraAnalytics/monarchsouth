@@ -55,7 +55,7 @@ export default function GlowCursor() {
           marginTop: -4,
           marginLeft: -4,
           borderRadius: '50%',
-          backgroundColor: '#f0b429',
+          backgroundColor: '#d4a017',
           pointerEvents: 'none',
           zIndex: 99999,
         }}
@@ -72,8 +72,8 @@ export default function GlowCursor() {
           marginTop: -20,
           marginLeft: -20,
           borderRadius: '50%',
-          border: '1px solid rgba(240, 180, 41, 0.5)',
-          boxShadow: '0 0 16px rgba(240, 180, 41, 0.2)',
+          border: '1px solid rgba(212, 160, 23, 0.5)',
+          boxShadow: '0 0 16px rgba(212, 160, 23, 0.2)',
           pointerEvents: 'none',
           zIndex: 99998,
         }}

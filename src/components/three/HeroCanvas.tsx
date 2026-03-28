@@ -25,10 +25,10 @@ export default function HeroCanvas({ mouseX, mouseY }: HeroCanvasProps) {
   return (
     <>
       {/* Scene lighting */}
-      <ambientLight intensity={0.15} color="#3d8bff" />
-      <directionalLight position={[5, 5, 3]} intensity={1.0} color="#f0b429" />
-      <pointLight position={[-5, -3, -5]} intensity={0.4} color="#3d8bff" />
-      <pointLight position={[0, 5, 0]} intensity={0.2} color="#f0f4ff" />
+      <ambientLight intensity={0.15} color="#c8731a" />
+      <directionalLight position={[5, 5, 3]} intensity={1.0} color="#d4a017" />
+      <pointLight position={[-5, -3, -5]} intensity={0.4} color="#d4a017" />
+      <pointLight position={[0, 5, 0]} intensity={0.2} color="#f5e6c8" />
 
       {/* Scene group for mouse parallax */}
       <group ref={groupRef}>

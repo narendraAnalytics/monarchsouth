@@ -3,8 +3,8 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 const PARTICLE_COUNT = 3000
-const GOLD = new THREE.Color('#f0b429')
-const BLUE = new THREE.Color('#3d8bff')
+const GOLD = new THREE.Color('#d4a017')
+const AMBER = new THREE.Color('#c8731a')
 
 export default function ParticleField() {
   const meshRef = useRef<THREE.Points>(null)
@@ -23,9 +23,9 @@ export default function ParticleField() {
       positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta)
       positions[i * 3 + 2] = r * Math.cos(phi)
 
-      // Mix gold and blue particles, gold dominant
-      const isBlue = Math.random() < 0.15
-      const base = isBlue ? BLUE : GOLD
+      // Mix gold and amber particles, gold dominant
+      const isAmber = Math.random() < 0.25
+      const base = isAmber ? AMBER : GOLD
       const brightness = 0.6 + Math.random() * 0.4
 
       colors[i * 3]     = base.r * brightness

@@ -48,7 +48,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
         width: '100%',
         height: '100vh',
         overflow: 'hidden',
-        backgroundColor: '#08101e',
+        backgroundColor: '#150c05',
       }}
       onMouseMove={handleMouseMove}
     >
@@ -78,7 +78,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
           inset: 0,
           zIndex: 1,
           pointerEvents: 'none',
-          background: `radial-gradient(700px circle at ${spotlightX}% ${spotlightY}%, rgba(240,180,41,0.055) 0%, transparent 70%)`,
+          background: `radial-gradient(700px circle at ${spotlightX}% ${spotlightY}%, rgba(212,160,23,0.055) 0%, transparent 70%)`,
           transition: 'background 0.1s ease',
         }}
       />
@@ -109,7 +109,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
               fontFamily: "'Space Mono', monospace",
               fontSize: '13px',
               letterSpacing: '0.2em',
-              color: '#f0b429',
+              color: '#d4a017',
               background: 'none',
               border: 'none',
               cursor: 'pointer',
@@ -129,15 +129,15 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
                     fontFamily: "'Space Mono', monospace",
                     fontSize: '10px',
                     letterSpacing: '0.25em',
-                    color: 'rgba(240,244,255,0.55)',
+                    color: 'rgba(245,230,200,0.55)',
                     background: 'none',
                     border: 'none',
                     cursor: 'pointer',
                     padding: 0,
                     transition: 'color 0.2s',
                   }}
-                  onMouseEnter={e => ((e.target as HTMLElement).style.color = '#f0b429')}
-                  onMouseLeave={e => ((e.target as HTMLElement).style.color = 'rgba(240,244,255,0.55)')}
+                  onMouseEnter={e => ((e.target as HTMLElement).style.color = '#d4a017')}
+                  onMouseLeave={e => ((e.target as HTMLElement).style.color = 'rgba(245,230,200,0.55)')}
                 >
                   {label}
                 </button>
@@ -155,19 +155,19 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
             fontFamily: "'Space Mono', monospace",
             fontSize: '10px',
             lineHeight: '1.9',
-            color: 'rgba(240,180,41,0.65)',
-            border: '1px solid rgba(240,180,41,0.18)',
+            color: 'rgba(212,160,23,0.65)',
+            border: '1px solid rgba(212,160,23,0.18)',
             padding: '16px 20px',
-            backgroundColor: 'rgba(8,16,30,0.7)',
+            backgroundColor: 'rgba(21,12,5,0.7)',
             backdropFilter: 'blur(12px)',
             WebkitBackdropFilter: 'blur(12px)',
             minWidth: '220px',
           }}
         >
-          <div style={{ color: '#f0b429', letterSpacing: '0.2em', marginBottom: '6px' }}>
+          <div style={{ color: '#d4a017', letterSpacing: '0.2em', marginBottom: '6px' }}>
             MONARCH STATUS
           </div>
-          <div style={{ borderBottom: '1px solid rgba(240,180,41,0.15)', marginBottom: '8px' }} />
+          <div style={{ borderBottom: '1px solid rgba(212,160,23,0.15)', marginBottom: '8px' }} />
           <div>SESSION &nbsp;&nbsp;: [{sessionDate}]</div>
           <div>TIME &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: [<LiveClock />]</div>
           <div>COLLECTION: [SPRING 2026]</div>
@@ -193,7 +193,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
               fontFamily: "'Space Mono', monospace",
               fontSize: '9px',
               letterSpacing: '0.35em',
-              color: 'rgba(240,180,41,0.5)',
+              color: 'rgba(212,160,23,0.5)',
               marginBottom: '24px',
               textTransform: 'uppercase',
             }}
@@ -208,7 +208,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
               fontSize: 'clamp(2.8rem, 6.5vw, 6rem)',
               lineHeight: 1.05,
               fontWeight: 700,
-              color: '#f0f4ff',
+              color: '#f5e6c8',
               marginBottom: '0',
               letterSpacing: '-0.01em',
             }}
@@ -223,7 +223,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
               text="THE BOLD."
               style={{
                 display: 'block',
-                background: 'linear-gradient(135deg, #f0b429 0%, #3d8bff 100%)',
+                background: 'linear-gradient(135deg, #d4a017 0%, #c8731a 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -238,7 +238,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
             style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)',
-              color: '#7a9cc4',
+              color: '#c9a96e',
               maxWidth: '440px',
               lineHeight: 1.7,
               marginTop: '28px',
@@ -259,8 +259,8 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
                 fontSize: '10px',
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
-                border: '1px solid #f0b429',
-                color: '#f0b429',
+                border: '1px solid #d4a017',
+                color: '#d4a017',
                 background: 'transparent',
                 padding: '14px 32px',
                 cursor: 'pointer',
@@ -268,13 +268,13 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget
-                el.style.backgroundColor = '#f0b429'
-                el.style.color = '#08101e'
+                el.style.backgroundColor = '#d4a017'
+                el.style.color = '#150c05'
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget
                 el.style.backgroundColor = 'transparent'
-                el.style.color = '#f0b429'
+                el.style.color = '#d4a017'
               }}
             >
               [SHOP COLLECTION]
@@ -286,8 +286,8 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
                 fontSize: '10px',
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
-                border: '1px solid rgba(240,244,255,0.2)',
-                color: 'rgba(240,244,255,0.5)',
+                border: '1px solid rgba(245,230,200,0.2)',
+                color: 'rgba(245,230,200,0.5)',
                 background: 'transparent',
                 padding: '14px 32px',
                 cursor: 'pointer',
@@ -295,13 +295,13 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget
-                el.style.borderColor = 'rgba(240,244,255,0.6)'
-                el.style.color = '#f0f4ff'
+                el.style.borderColor = 'rgba(245,230,200,0.6)'
+                el.style.color = '#f5e6c8'
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget
-                el.style.borderColor = 'rgba(240,244,255,0.2)'
-                el.style.color = 'rgba(240,244,255,0.5)'
+                el.style.borderColor = 'rgba(245,230,200,0.2)'
+                el.style.color = 'rgba(245,230,200,0.5)'
               }}
             >
               [EXPLORE ↗]
@@ -319,7 +319,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
             fontFamily: "'Space Mono', monospace",
             fontSize: '9px',
             letterSpacing: '0.18em',
-            color: 'rgba(122,156,196,0.4)',
+            color: 'rgba(201,169,110,0.4)',
           }}
         >
           <span>SUPIMA COTTON · MERINO WOOL · ITALIAN FABRIC · HAND STITCHED</span>
@@ -335,7 +335,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
           left: 0,
           right: 0,
           height: '200px',
-          background: 'linear-gradient(to top, rgba(8,16,30,0.6) 0%, transparent 100%)',
+          background: 'linear-gradient(to top, rgba(21,12,5,0.6) 0%, transparent 100%)',
           zIndex: 5,
           pointerEvents: 'none',
         }}

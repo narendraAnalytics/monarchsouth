@@ -1,11 +1,10 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { MeshDistortMaterial } from '@react-three/drei'
 import * as THREE from 'three'
 
 export default function FloatingGeometry() {
   const icoRef = useRef<THREE.Mesh>(null)
-  const torusRef = useRef<THREE.Mesh>(null)
+  const crownRef = useRef<THREE.Group>(null)
   const ringRef = useRef<THREE.Mesh>(null)
 
   useFrame((_, delta) => {
@@ -13,9 +12,8 @@ export default function FloatingGeometry() {
       icoRef.current.rotation.x += delta * 0.18
       icoRef.current.rotation.y += delta * 0.12
     }
-    if (torusRef.current) {
-      torusRef.current.rotation.x += delta * 0.1
-      torusRef.current.rotation.z += delta * 0.14
+    if (crownRef.current) {
+      crownRef.current.rotation.y += delta * 0.08
     }
     if (ringRef.current) {
       ringRef.current.rotation.y += delta * 0.06
@@ -29,32 +27,57 @@ export default function FloatingGeometry() {
       <mesh ref={icoRef} position={[2.5, 0.3, -1.5]}>
         <icosahedronGeometry args={[1.3, 1]} />
         <meshBasicMaterial
-          color="#f0b429"
+          color="#d4a017"
           wireframe
           transparent
           opacity={0.25}
         />
       </mesh>
 
-      {/* Distorted torus knot — electric blue, left side */}
-      <mesh ref={torusRef} position={[-2.8, -0.4, -2.5]}>
-        <torusKnotGeometry args={[0.7, 0.18, 120, 16]} />
-        <MeshDistortMaterial
-          color="#3d8bff"
-          distort={0.35}
-          speed={2.5}
-          roughness={0.1}
-          metalness={0.9}
-          transparent
-          opacity={0.45}
-        />
-      </mesh>
+      {/* 3D Crown — gold wireframe, left side — "Wear Your Crown" */}
+      <group ref={crownRef} position={[-2.5, 0, -2.5]}>
+        {/* Base band (horizontal torus ring) */}
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.75, 0.05, 8, 80]} />
+          <meshBasicMaterial color="#d4a017" wireframe transparent opacity={0.55} />
+        </mesh>
+
+        {/* Front center point — tallest */}
+        <mesh position={[0, 0.4, 0.75]}>
+          <cylinderGeometry args={[0.01, 0.09, 0.8, 5]} />
+          <meshBasicMaterial color="#d4a017" wireframe transparent opacity={0.55} />
+        </mesh>
+
+        {/* Front-right point */}
+        <mesh position={[0.714, 0.275, 0.232]}>
+          <cylinderGeometry args={[0.01, 0.07, 0.55, 5]} />
+          <meshBasicMaterial color="#d4a017" wireframe transparent opacity={0.55} />
+        </mesh>
+
+        {/* Front-left point */}
+        <mesh position={[-0.714, 0.275, 0.232]}>
+          <cylinderGeometry args={[0.01, 0.07, 0.55, 5]} />
+          <meshBasicMaterial color="#d4a017" wireframe transparent opacity={0.55} />
+        </mesh>
+
+        {/* Back-right point — shorter */}
+        <mesh position={[0.441, 0.175, -0.607]}>
+          <cylinderGeometry args={[0.01, 0.055, 0.35, 5]} />
+          <meshBasicMaterial color="#d4a017" wireframe transparent opacity={0.4} />
+        </mesh>
+
+        {/* Back-left point — shorter */}
+        <mesh position={[-0.441, 0.175, -0.607]}>
+          <cylinderGeometry args={[0.01, 0.055, 0.35, 5]} />
+          <meshBasicMaterial color="#d4a017" wireframe transparent opacity={0.4} />
+        </mesh>
+      </group>
 
       {/* Thin wireframe ring — gold, large background element */}
       <mesh ref={ringRef} position={[0, 0, -4]} rotation={[0.4, 0, 0]}>
         <torusGeometry args={[3.5, 0.015, 8, 100]} />
         <meshBasicMaterial
-          color="#f0b429"
+          color="#d4a017"
           transparent
           opacity={0.12}
         />

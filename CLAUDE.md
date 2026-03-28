@@ -1,5 +1,6 @@
 # MONARCHSOUTH — Project Documentation
 > Men's Branded Fashion Shop · 3D Modern Website · Cinematic Luxury Aesthetic
+The Monarch South website is being designed as a premium interactive menswear fashion experience that showcases branded clothing through elegant visuals, smooth animations, and modern product storytelling. The goal is to create a stylish, luxury-inspired website that feels more like a fashion launch experience than a traditional ecommerce store.
 
 ---
 
@@ -7,7 +8,7 @@
 
 **Brand Name:** MONARCHSOUTH
 **Product Categories:** Men's T-Shirts + Formal Wear (Blazers, Dress Shirts, Trousers)
-**Tagline:** "Engineered for the Bold. Worn by the Few."
+**Tagline:** "Wear Your Crown."
 **Goal:** A high-end, cinematic 3D branded e-commerce experience for men's fashion — inspired by pixelvault.fit's immersive terminal aesthetic. No Blender. All 3D is procedural via React Three Fiber.
 
 ---
