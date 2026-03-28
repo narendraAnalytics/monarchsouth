@@ -34,6 +34,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
   const [logoKey, setLogoKey] = useState(0)
   const [navKeys, setNavKeys] = useState<number[]>([0, 0, 0])
   const spotlightRef = useRef<HTMLDivElement>(null)
+  const productRef = useRef<HTMLDivElement>(null)
   const spotlightX = (mousePos.x + 0.5) * 100
   const spotlightY = (mousePos.y + 0.5) * 100
 
@@ -42,6 +43,14 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
       spotlightRef.current.style.background = `radial-gradient(700px circle at ${spotlightX}% ${spotlightY}%, rgba(212,160,23,0.055) 0%, transparent 70%)`
     }
   }, [spotlightX, spotlightY])
+
+  useEffect(() => {
+    if (productRef.current) {
+      const tiltX = -mousePos.y * 20
+      const tiltY = mousePos.x * 20
+      productRef.current.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`
+    }
+  }, [mousePos])
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({
@@ -121,21 +130,40 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
             [NEW COLLECTION &nbsp;·&nbsp; SPRING 2026]
           </div>
 
-          {/* Subtitle */}
-          <p className="hero-subtitle">
-            Precision-crafted menswear. Italian fabrics.
-            Uncompromising construction.
-          </p>
-
-          {/* CTA buttons */}
-          <div className="hero-cta-group">
-            <button className="hero-cta-primary" onClick={() => navigate('collections')}>
-              [SHOP COLLECTION]
-            </button>
-            <button className="hero-cta-secondary" onClick={() => navigate('lookbook')}>
-              [EXPLORE ↗]
-            </button>
+          {/* Product image with premium animations */}
+          <div className="hero-product-scene">
+            <div className="hero-product-glow" />
+            <div ref={productRef} className="hero-product-wrapper">
+              <div className="hero-product-frame">
+                <img
+                  src="/images/herosecctionimg/imagetshirt.png"
+                  alt="MONARCHSOUTH Icon Tee"
+                  className="hero-product-img"
+                />
+                <div className="hero-hotspot hero-hotspot-1">
+                  <div className="hero-hotspot-ring" />
+                  <div className="hero-hotspot-dot" />
+                  <span className="hero-hotspot-label">SUPIMA COTTON</span>
+                </div>
+                <div className="hero-hotspot hero-hotspot-2">
+                  <div className="hero-hotspot-ring" />
+                  <div className="hero-hotspot-dot" />
+                  <span className="hero-hotspot-label">HAND STITCHED</span>
+                </div>
+                <div className="hero-hotspot hero-hotspot-3">
+                  <div className="hero-hotspot-ring" />
+                  <div className="hero-hotspot-dot" />
+                  <span className="hero-hotspot-label">ITALIAN FABRIC</span>
+                </div>
+                <div className="hero-hotspot hero-hotspot-4">
+                  <div className="hero-hotspot-ring" />
+                  <div className="hero-hotspot-dot" />
+                  <span className="hero-hotspot-label">MERINO WOOL</span>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
 
         {/* ─ BOTTOM HUD STRIP ─────────────────────────────── */}

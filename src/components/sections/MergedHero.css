@@ -123,9 +123,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 0 40px;
-  padding-top: 40vh;
+  justify-content: flex-start;
+  padding: 0 40px 0;
+  margin-top: -75px;
   text-align: center;
 }
 
@@ -134,7 +134,7 @@
   font-size: 9px;
   letter-spacing: 0.35em;
   color: rgba(212, 160, 23, 0.5);
-  margin-bottom: 24px;
+  margin-bottom: 4px;
   text-transform: uppercase;
 }
 
@@ -144,8 +144,8 @@
   color: #c9a96e;
   max-width: 440px;
   line-height: 1.7;
-  margin-top: 28px;
-  margin-bottom: 44px;
+  margin-top: 10px;
+  margin-bottom: 20px;
   font-weight: 300;
 }
 
@@ -215,3 +215,116 @@
   z-index: 5;
   pointer-events: none;
 }
+
+/* ── Product scene ─────────────────────────────────────── */
+.hero-product-scene {
+  position: relative;
+  perspective: 900px;
+  margin: 4px 0 10px;
+}
+
+.hero-product-glow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(ellipse at center, rgba(212, 160, 23, 0.12) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Tilt wrapper — transform applied via JS */
+.hero-product-wrapper {
+  position: relative;
+  display: inline-block;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+  z-index: 1;
+}
+
+/* Breathing scale wrapper */
+.hero-product-frame {
+  position: relative;
+  display: inline-block;
+  animation: heroBreathe 5s ease-in-out 1.4s infinite;
+}
+
+/* Entrance 360° spin on the image */
+.hero-product-img {
+  height: clamp(550px, 80vh, 650px);
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 8px 40px rgba(212, 160, 23, 0.18)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+  animation: heroEntrance 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes heroEntrance {
+  from { opacity: 0; transform: rotateY(-360deg) scale(0.65); }
+  to   { opacity: 1; transform: rotateY(0deg)    scale(1);    }
+}
+
+@keyframes heroBreathe {
+  0%, 100% { transform: scale(1);    }
+  50%      { transform: scale(1.04); }
+}
+
+/* ── Hotspots ───────────────────────────────────────────── */
+.hero-hotspot {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 3;
+}
+
+.hero-hotspot-1 { top: 20%; left: 38%; }
+.hero-hotspot-2 { top: 42%; left: 60%; }
+.hero-hotspot-3 { top: 70%; left: 30%; }
+.hero-hotspot-4 { top: 28%; left: 72%; }
+
+.hero-hotspot-dot {
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: #d4a017;
+  box-shadow: 0 0 6px rgba(212, 160, 23, 0.7);
+  z-index: 2;
+}
+
+.hero-hotspot-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 160, 23, 0.7);
+  animation: hotspotPulse 2.4s ease-out infinite;
+}
+
+.hero-hotspot-1 .hero-hotspot-ring { animation-delay: 0s;   }
+.hero-hotspot-2 .hero-hotspot-ring { animation-delay: 0.6s; }
+.hero-hotspot-3 .hero-hotspot-ring { animation-delay: 1.2s; }
+.hero-hotspot-4 .hero-hotspot-ring { animation-delay: 1.8s; }
+
+@keyframes hotspotPulse {
+  0%   { transform: scale(1); opacity: 0.9; }
+  100% { transform: scale(3); opacity: 0;   }
+}
+
+.hero-hotspot-label {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: rgba(212, 160, 23, 0.9);
+  background: rgba(21, 12, 5, 0.85);
+  padding: 3px 7px;
+  border: 1px solid rgba(212, 160, 23, 0.25);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.hero-hotspot:hover .hero-hotspot-label { opacity: 1; }
