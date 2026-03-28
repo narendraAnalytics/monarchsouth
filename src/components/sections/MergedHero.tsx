@@ -30,6 +30,8 @@ const sessionDate = `${String(today.getDate()).padStart(2, '0')}.${String(today.
 
 export default function MergedHero({ navigate }: MergedHeroProps) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [logoKey, setLogoKey] = useState(0)
+  const [navKeys, setNavKeys] = useState<number[]>([0, 0, 0])
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({
@@ -105,6 +107,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
           {/* Logo */}
           <button
             onClick={() => navigate('home')}
+            onMouseEnter={() => setLogoKey(k => k + 1)}
             style={{
               fontFamily: "'Space Mono', monospace",
               fontSize: '13px',
@@ -116,12 +119,12 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
               padding: 0,
             }}
           >
-            [MONARCHSOUTH]
+            <TextScramble key={logoKey} text="[MONARCHSOUTH]" duration={700} delay={0} />
           </button>
 
           {/* Nav links */}
           <ul style={{ display: 'flex', gap: '40px', listStyle: 'none', margin: 0, padding: 0 }}>
-            {NAV_LINKS.map(({ label, page }) => (
+            {NAV_LINKS.map(({ label, page }, i) => (
               <li key={label}>
                 <button
                   onClick={() => navigate(page)}
@@ -136,10 +139,13 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
                     padding: 0,
                     transition: 'color 0.2s',
                   }}
-                  onMouseEnter={e => ((e.target as HTMLElement).style.color = '#d4a017')}
-                  onMouseLeave={e => ((e.target as HTMLElement).style.color = 'rgba(245,230,200,0.55)')}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.color = '#d4a017'
+                    setNavKeys(keys => keys.map((k, j) => j === i ? k + 1 : k))
+                  }}
+                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'rgba(245,230,200,0.55)')}
                 >
-                  {label}
+                  <TextScramble key={navKeys[i]} text={label} duration={500} delay={0} />
                 </button>
               </li>
             ))}
