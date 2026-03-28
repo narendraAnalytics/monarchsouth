@@ -81,6 +81,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
             onClick={() => navigate('home')}
             onMouseEnter={() => setLogoKey(k => k + 1)}
           >
+            <img src="/images/logo.png" alt="MONARCHSOUTH logo" className="hero-logo-img" />
             <TextScramble key={logoKey} text="[MONARCHSOUTH]" duration={700} delay={0} />
           </button>
 
