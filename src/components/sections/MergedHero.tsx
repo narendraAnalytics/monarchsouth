@@ -35,12 +35,23 @@ const ZOOM = 3
 const RESULT_W = 220
 const RESULT_H = 220
 
+const FRAMES = [
+  '/images/herosecctionimg/imagetshirt.png',
+  '/images/herosecctionimg/imagemoreleft2.png',
+  '/images/herosecctionimg/imageside3.png',
+  '/images/herosecctionimg/imagebackleft4.png',
+  '/images/herosecctionimg/imageback5.png',
+  '/images/herosecctionimg/imagebackright6.png',
+  '/images/herosecctionimg/imageside7.png',
+]
+
 export default function MergedHero({ navigate }: MergedHeroProps) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [logoKey, setLogoKey] = useState(0)
   const [navKeys, setNavKeys] = useState<number[]>([0, 0, 0])
   const [zoomActive, setZoomActive] = useState(false)
   const [lensPos, setLensPos] = useState({ x: 0, y: 0 })
+  const [currentFrame, setCurrentFrame] = useState(0)
   const spotlightRef = useRef<HTMLDivElement>(null)
   const productRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
@@ -63,6 +74,27 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
       productRef.current.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`
     }
   }, [mousePos])
+
+  // Auto-advance frames after entrance animation completes
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      const id = setInterval(() => {
+        setCurrentFrame(f => (f + 1) % FRAMES.length)
+      }, 500)
+      return () => clearInterval(id)
+    }, 1500)
+    return () => clearTimeout(delay)
+  }, [])
+
+  // Crossfade: briefly dip opacity on each frame change
+  useEffect(() => {
+    if (!imageRef.current) return
+    imageRef.current.style.opacity = '0'
+    const t = setTimeout(() => {
+      if (imageRef.current) imageRef.current.style.opacity = '1'
+    }, 80)
+    return () => clearTimeout(t)
+  }, [currentFrame])
 
   const handleZoomEnter = () => setZoomActive(true)
 
@@ -188,7 +220,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
               >
                 <img
                   ref={imageRef}
-                  src="/images/herosecctionimg/imagetshirt.png"
+                  src={FRAMES[currentFrame]}
                   alt="MONARCHSOUTH Icon Tee"
                   className="hero-product-img"
                 />
@@ -224,7 +256,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
             <div
               ref={zoomResultRef}
               className={`hero-zoom-result${zoomActive ? ' hero-zoom-result--active' : ''}`}
-              style={{ backgroundImage: `url('/images/herosecctionimg/imagetshirt.png')` }}
+              style={{ backgroundImage: `url('${FRAMES[currentFrame]}')` }}
             >
               <span className="hero-zoom-label">[ZOOM]</span>
             </div>
@@ -235,7 +267,7 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
         {/* ─ BOTTOM HUD STRIP ─────────────────────────────── */}
         <div className="hero-bottom-hud">
           <span>SUPIMA COTTON · MERINO WOOL · ITALIAN FABRIC · HAND STITCHED</span>
-          <span>[X] 001 / 001</span>
+          <span>[X] {String(currentFrame + 1).padStart(3, '0')} / {String(FRAMES.length).padStart(3, '0')}</span>
         </div>
       </div>
 
