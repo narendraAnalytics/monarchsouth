@@ -245,6 +245,7 @@
   position: relative;
   display: inline-block;
   animation: heroBreathe 5s ease-in-out 1.4s infinite;
+  cursor: crosshair;
 }
 
 /* Entrance 360° spin on the image */
@@ -258,8 +259,8 @@
 }
 
 @keyframes heroEntrance {
-  from { opacity: 0; transform: rotateY(-360deg) scale(0.65); }
-  to   { opacity: 1; transform: rotateY(0deg)    scale(1);    }
+  from { opacity: 0; transform: scale(0.65); }
+  to   { opacity: 1; transform: scale(1);    }
 }
 
 @keyframes heroBreathe {
@@ -328,3 +329,55 @@
 }
 
 .hero-hotspot:hover .hero-hotspot-label { opacity: 1; }
+
+/* ── Zoom lens (crosshair square on image) ─────────────── */
+.hero-zoom-lens {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border: 1px solid rgba(212, 160, 23, 0.85);
+  box-shadow: 0 0 0 1px rgba(212, 160, 23, 0.15), inset 0 0 14px rgba(212, 160, 23, 0.07);
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  background:
+    linear-gradient(rgba(212, 160, 23, 0.25) 1px, transparent 1px) center / 100% 50%,
+    linear-gradient(90deg, rgba(212, 160, 23, 0.25) 1px, transparent 1px) center / 50% 100%;
+}
+.hero-zoom-lens--active { opacity: 1; }
+
+/* ── Zoom result box ───────────────────────────────────── */
+.hero-zoom-result {
+  position: absolute;
+  left: -258px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-10px);
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(212, 160, 23, 0.55);
+  background-color: rgba(21, 12, 5, 0.96);
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.22s ease;
+  overflow: hidden;
+}
+.hero-zoom-result--active {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+.hero-zoom-label {
+  position: absolute;
+  bottom: 7px;
+  left: 9px;
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: rgba(212, 160, 23, 0.55);
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+}

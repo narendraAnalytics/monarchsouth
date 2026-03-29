@@ -29,12 +29,24 @@ function LiveClock() {
 const today = new Date()
 const sessionDate = `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`
 
+const LENS_W = 90
+const LENS_H = 90
+const ZOOM = 3
+const RESULT_W = 220
+const RESULT_H = 220
+
 export default function MergedHero({ navigate }: MergedHeroProps) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [logoKey, setLogoKey] = useState(0)
   const [navKeys, setNavKeys] = useState<number[]>([0, 0, 0])
+  const [zoomActive, setZoomActive] = useState(false)
+  const [lensPos, setLensPos] = useState({ x: 0, y: 0 })
   const spotlightRef = useRef<HTMLDivElement>(null)
   const productRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLImageElement>(null)
+  const frameRef = useRef<HTMLDivElement>(null)
+  const zoomResultRef = useRef<HTMLDivElement>(null)
+  const lensRef = useRef<HTMLDivElement>(null)
   const spotlightX = (mousePos.x + 0.5) * 100
   const spotlightY = (mousePos.y + 0.5) * 100
 
@@ -51,6 +63,39 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
       productRef.current.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`
     }
   }, [mousePos])
+
+  const handleZoomEnter = () => setZoomActive(true)
+
+  const handleZoomLeave = () => setZoomActive(false)
+
+  const handleZoomMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!frameRef.current || !imageRef.current || !zoomResultRef.current) return
+
+    const frameRect = frameRef.current.getBoundingClientRect()
+    const imgRect = imageRef.current.getBoundingClientRect()
+
+    const curX = e.clientX - frameRect.left
+    const curY = e.clientY - frameRect.top
+
+    const imgLeft = imgRect.left - frameRect.left
+    const imgTop  = imgRect.top  - frameRect.top
+
+    const lensX = Math.max(imgLeft, Math.min(curX - LENS_W / 2, imgLeft + imgRect.width  - LENS_W))
+    const lensY = Math.max(imgTop,  Math.min(curY - LENS_H / 2, imgTop  + imgRect.height - LENS_H))
+
+    setLensPos({ x: lensX, y: lensY })
+
+    const pctX = (lensX - imgLeft + LENS_W / 2) / imgRect.width
+    const pctY = (lensY - imgTop  + LENS_H / 2) / imgRect.height
+
+    const bgW = imgRect.width  * ZOOM
+    const bgH = imgRect.height * ZOOM
+    const bgX = -(pctX * bgW - RESULT_W / 2)
+    const bgY = -(pctY * bgH - RESULT_H / 2)
+
+    zoomResultRef.current.style.backgroundSize     = `${bgW}px ${bgH}px`
+    zoomResultRef.current.style.backgroundPosition = `${bgX}px ${bgY}px`
+  }
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({
@@ -134,11 +179,24 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
           <div className="hero-product-scene">
             <div className="hero-product-glow" />
             <div ref={productRef} className="hero-product-wrapper">
-              <div className="hero-product-frame">
+              <div
+                ref={frameRef}
+                className="hero-product-frame"
+                onMouseEnter={handleZoomEnter}
+                onMouseMove={handleZoomMove}
+                onMouseLeave={handleZoomLeave}
+              >
                 <img
+                  ref={imageRef}
                   src="/images/herosecctionimg/imagetshirt.png"
                   alt="MONARCHSOUTH Icon Tee"
                   className="hero-product-img"
+                />
+                {/* Zoom lens crosshair follows cursor */}
+                <div
+                  ref={lensRef}
+                  className={`hero-zoom-lens${zoomActive ? ' hero-zoom-lens--active' : ''}`}
+                  style={{ left: lensPos.x, top: lensPos.y }}
                 />
                 <div className="hero-hotspot hero-hotspot-1">
                   <div className="hero-hotspot-ring" />
@@ -161,6 +219,14 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
                   <span className="hero-hotspot-label">MERINO WOOL</span>
                 </div>
               </div>
+            </div>
+            {/* Zoom result box — outside tilt wrapper to avoid 3D distortion */}
+            <div
+              ref={zoomResultRef}
+              className={`hero-zoom-result${zoomActive ? ' hero-zoom-result--active' : ''}`}
+              style={{ backgroundImage: `url('/images/herosecctionimg/imagetshirt.png')` }}
+            >
+              <span className="hero-zoom-label">[ZOOM]</span>
             </div>
           </div>
 
