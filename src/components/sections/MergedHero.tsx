@@ -58,6 +58,8 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
   const frameRef = useRef<HTMLDivElement>(null)
   const zoomResultRef = useRef<HTMLDivElement>(null)
   const lensRef = useRef<HTMLDivElement>(null)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const rotationStarted = useRef(false)
   const spotlightX = (mousePos.x + 0.5) * 100
   const spotlightY = (mousePos.y + 0.5) * 100
 
@@ -78,12 +80,15 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
   // Auto-advance frames after entrance animation completes
   useEffect(() => {
     const delay = setTimeout(() => {
-      const id = setInterval(() => {
+      rotationStarted.current = true
+      intervalRef.current = setInterval(() => {
         setCurrentFrame(f => (f + 1) % FRAMES.length)
       }, 500)
-      return () => clearInterval(id)
     }, 1500)
-    return () => clearTimeout(delay)
+    return () => {
+      clearTimeout(delay)
+      if (intervalRef.current) clearInterval(intervalRef.current)
+    }
   }, [])
 
   // Crossfade: briefly dip opacity on each frame change
@@ -96,9 +101,22 @@ export default function MergedHero({ navigate }: MergedHeroProps) {
     return () => clearTimeout(t)
   }, [currentFrame])
 
-  const handleZoomEnter = () => setZoomActive(true)
+  const handleZoomEnter = () => {
+    setZoomActive(true)
+    if (rotationStarted.current && intervalRef.current) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
+  }
 
-  const handleZoomLeave = () => setZoomActive(false)
+  const handleZoomLeave = () => {
+    setZoomActive(false)
+    if (rotationStarted.current && !intervalRef.current) {
+      intervalRef.current = setInterval(() => {
+        setCurrentFrame(f => (f + 1) % FRAMES.length)
+      }, 500)
+    }
+  }
 
   const handleZoomMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!frameRef.current || !imageRef.current || !zoomResultRef.current) return
